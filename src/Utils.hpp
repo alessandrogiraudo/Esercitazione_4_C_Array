@@ -24,5 +24,3 @@ double finalValue(const double& S,
 				  const double* const& w,
 				  const double* const& r);
 				  			  
-string ArrayToString(const unsigned int& n,
-					 const double* const& v);

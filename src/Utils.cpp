@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -41,10 +42,8 @@ bool ImportData(const string& importFilePath,
 		file.ignore();
 	}
 	
-	cout << fixed;
-	cout.precision(2);
-	
-	cout << "S = " << S << ", n = " << n << endl;
+	cout << "S = " << fixed << setprecision(2) << S << defaultfloat << ", n = " << n << endl;
+
 	cout << "w = [";
 	for(unsigned int i = 0; i<n; i++) {
 		cout << w[i] << " ";
@@ -59,11 +58,11 @@ bool ImportData(const string& importFilePath,
 	double rate = 0.0;
 	for(unsigned int i = 0; i < n; i++)
 	{
-		rate = rate + w[i] * r[i];
+		rate += w[i] * r[i];
 	}
 
     cout << "Rate of return of the portfolio: " << rate << endl;
-    cout << "V: " << finalValue << endl;
+    cout << "V: " << fixed << setprecision(2) << (1 + rate) * S << defaultfloat << endl;;
 	
 	return true;
 };
@@ -84,10 +83,8 @@ bool ExportResult(const string& outputFilePath,
         return false;
     }
 	
-	file << fixed;
-	file.precision(2); 
-
-    file << "S = " << S << ", n =" << n << endl;
+	file << "S = " << fixed << setprecision(2) << S << defaultfloat << ", n = " << n << endl;
+	
 	file << "w = [";
 	for(unsigned int i = 0; i<n; i++) {
 		file << w[i] << " ";
@@ -102,11 +99,11 @@ bool ExportResult(const string& outputFilePath,
 	double rate = 0.0;
 	for(unsigned int i = 0; i < n; i++)
 	{
-		rate = rate + w[i] * r[i];
+		rate += w[i] * r[i];
 	}
 
     file << "Rate of return of the portfolio: " << rate << endl;
-    file << "V: " << finalValue << endl;
+    file << "V: " << fixed << setprecision(2) << finalValue << defaultfloat << endl;
 
     return true;
 }
@@ -123,16 +120,3 @@ double finalValue(const double& S,
 	}
 	return (1 + rate) * S;
 }
-
-string ArrayToString(const unsigned int& n,
-					 const double* const& v)
-{
-    string str;
-    ostringstream toString;
-    toString << "[ ";
-    for (unsigned int i = 0; i < n; i++)
-        toString<< v[i]<< " ";
-    toString << "]";
-
-    return toString.str();
-};
